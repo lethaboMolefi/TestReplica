@@ -80,7 +80,9 @@ public class MessageStuffGUI extends JFrame{
         headingLbl.setBorder(new BevelBorder(BevelBorder.RAISED, Color.yellow, Color.black));
         
         textArea1 = new JTextArea(10, 10);
+        textArea1.setEditable(false);
         textArea2 = new JTextArea(10, 10);
+        textArea2.setEditable(false);
         scroll1 = new JScrollPane(textArea1, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         scroll2 = new JScrollPane(textArea2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         
@@ -136,22 +138,17 @@ public class MessageStuffGUI extends JFrame{
         public String encryptedMessage;
         @Override 
         public void actionPerformed(ActionEvent e) {
-            textArea1.setText("");
-        try{
             Message m = new Message(textArea1.getText());
+//            System.out.println("1"+textArea1.getText());
+            textArea1.setText("");
+//            System.out.println("2"+textArea1.getText());
+//            System.out.println("3"+m.getPlainText());
             EncryptMessage em = new EncryptMessage();
-            textArea2.setText(em.encryptMessage(m));
-            
-        }catch(NoClassDefFoundError ex){
-//            ex.;
-            System.out.println("fdf");
-        }    
-        
-        
-//        encryptedMessage = em.encryptMessage(new Message(textArea1.getText()));
-        
-        textArea2.setText(encryptedMessage);
-        
+//            System.out.println("4"+textArea2.getText());
+            em.encryptMessage(m);
+            textArea2.setText(em.getnText());
+//            System.out.println("5"+textArea2.getText());
+//            System.out.println("6"+em.getnText());
         }
     
     }
@@ -214,22 +211,40 @@ public class MessageStuffGUI extends JFrame{
     }
     
     public class EncryptMessage {
-    public String encryptMessage(Message plainText){
-        String text = plainText.getPlainText();
+        private String text;
+        private String nText="";
         
-        for(int i=0; i < text.length(); i ++){
-                char c,c2=' ';
-                c = text.charAt(i);
-                if(c < 2){
-                    int ic = (int)c -2;
-                    c2 = (char)ic;
-                }
-                text.replace(c, c2);
+        public String getText() {
+            return text;
+        }
+
+        public String getnText() {
+            return nText;
         }
         
-        return text;
+        
+        public void encryptMessage(Message plainText){
+            text= plainText.getPlainText();
+
+            for(int i=0; i < text.length(); i ++){
+                    char c,c2=' ';
+                    c = text.charAt(i);
+                    try{
+                     c2=(char)(c-2);
+                     if(Character.isWhitespace(c2)){
+                         nText+=" ";
+                     }else{
+                         nText+=c2;
+                     }
+                     
+                    }catch(NullPointerException ex){
+                        JOptionPane.showMessageDialog(rootPane, "<Done incipting Data>");
+                    }
+                    
+            }
+//            
+        }
     }
-}
     
     public class Message {
     private String plainText;
