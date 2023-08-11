@@ -66,9 +66,9 @@ public class MessageStuffGUI extends JFrame{
         saveFile= new JMenuItem("Save File...");
         saveFile.addActionListener(new SaveFileClicked());
         clearTextArea= new JMenuItem("Clear...");
-        clearTextArea.addActionListener(new SaveFileClicked());
+        clearTextArea.addActionListener(new ClearTextAreaClicked());
         closeFile= new JMenuItem("Close File...");
-        openFile.addActionListener(new CloseFileClicked());
+        closeFile.addActionListener(new CloseFileClicked());
         
         file = new JMenu("File");
         
