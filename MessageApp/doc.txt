@@ -1,0 +1,4 @@
+Java is a fun language to start programming with 
+I enjoy using java syntax for early programming development
+We had to learn java
+We will master java 
